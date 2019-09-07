@@ -1,0 +1,2 @@
+[/system/framework/] framework-res.apk
+[/system/app/miui] miui.apk
