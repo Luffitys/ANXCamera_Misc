@@ -40,7 +40,6 @@ rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\system"
 rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\vendor"
 
 :: Add frameworks
-C: & cd "C:\Program Files\Java\jre1.8.0_221\bin"
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\framework\framework-res.apk"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\app\miui\miui.apk"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
 
@@ -77,7 +76,6 @@ xcopy "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\gson\gson_cla
 rmdir /S /Q D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp
 
 :: Extract classes and cleanup
-cd "C:\Program Files\Java\jre1.8.0_221\bin"
 Java -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\bootframework D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\boot-framework_classes.dex
 Java -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\bootframework2 D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\boot-framework_classes2.dex
 Java -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\bootframework3 D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\boot-framework_classes3.dex

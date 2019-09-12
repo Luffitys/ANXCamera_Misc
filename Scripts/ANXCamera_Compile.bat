@@ -1,12 +1,10 @@
 :: Compile
-cd "C:\Program Files\Java\jre1.8.0_221\bin" 
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" b -o "D:\ANXCamera\ANXCamera_Misc\APKTool\2-Recompiled APKs\ANXCamera.apk" "D:\ANXCamera\ANXCamera_APK"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
 
 :: Zipalign
 "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\zipalign.exe" -f 4 "D:\ANXCamera\ANXCamera_Misc\APKTool\2-Recompiled APKs\ANXCamera.apk" "D:\ANXCamera\ANXCamera_Misc\APKTool\2-Recompiled APKs\ANXCamera zipaligned.apk"
 
 :: Sign
-cd "C:\Program Files\Java\jre1.8.0_221\bin" 
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\ApkSigner.jar" sign  --key "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\apkeasytool.pk8" --cert "D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\apkeasytool.pem" --out "D:\ANXCamera\ANXCamera_Misc\APKTool\2-Recompiled APKs\ANXCamera zipaligned.apk" "D:\ANXCamera\ANXCamera_Misc\APKTool\2-Recompiled APKs\ANXCamera zipaligned.apk"
 
 :: Cleanup apk
