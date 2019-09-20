@@ -1,2 +1,3 @@
 APKTool/Frameworks/*.apk
-Rom_Files
+Rom_Files/system
+Rom_Files/vendor

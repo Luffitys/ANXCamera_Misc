@@ -5,64 +5,75 @@ C: & cd "C:\Program Files\7-Zip"
 7z x "D:\ANXCamera\ANXCamera_Misc\*.zip" -o"D:\ANXCamera\ANXCamera_Misc\Tools\temp\"
 D: & cd "D:\ANXCamera\ANXCamera_Misc\Tools\temp"
 
-:: Move files and cleanup
-move system.new.dat.br "D:\ANXCamera\ANXCamera_Misc\Tools\brotli" & move system.transfer.list "D:\ANXCamera\ANXCamera_Misc\Tools\brotli"
-move vendor.new.dat.br "D:\ANXCamera\ANXCamera_Misc\Tools\brotli" & move vendor.transfer.list "D:\ANXCamera\ANXCamera_Misc\Tools\brotli"
-cd D:\ & rmdir /S /Q "D:\ANXCamera\ANXCamera_Misc\Tools\temp"
+:: Move files
+move system.new.dat.br "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor" & move system.transfer.list "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
+move vendor.new.dat.br "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor" & move vendor.transfer.list "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
 
 :: Convert files and cleanup
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli"
-brotli.exe --decompress --in system.new.dat.br --out system.new.dat
+cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
+rmdir /S /Q "D:\ANXCamera\ANXCamera_Misc\Tools\temp"
+brotli --decompress --in system.new.dat.br --out system.new.dat
 del system.new.dat.br
-mkdir system
-move system.new.dat system & move system.transfer.list system
+mkdir temp & cd temp & mkdir system
+move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.new.dat" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system"
+move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system"
+cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
 ren vendor.new.dat.br system.new.dat.br & ren vendor.transfer.list system.transfer.list
-brotli.exe --decompress --in system.new.dat.br --out system.new.dat
+cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
+brotli --decompress --in system.new.dat.br --out system.new.dat
 del system.new.dat.br
-mkdir vendor
-move system.new.dat vendor & move system.transfer.list vendor
+cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp" & mkdir vendor
+move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.new.dat" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor"
+move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor"
 
 :: Extract system files and cleanup
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\img extractor"
-sdat2img "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\system\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\system\system.new.dat" system.img
+cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
+sdat2img "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system\system.new.dat" system.img
 imgextractor system.img
 del system.img system__statfile.txt
-xcopy "D:\ANXCamera\ANXCamera_Misc\Tools\img extractor\system_\system" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system" /O /X /E /H /K
-rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\img extractor\system_"
+move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system_" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor"
+ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system_" system
+rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system_"
 
 :: Extract vendor files and cleanup
-sdat2img "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\vendor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\vendor\system.new.dat" system.img
+sdat2img "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor\system.new.dat" system.img
 imgextractor system.img
 del system.img system__statfile.txt
-xcopy "D:\ANXCamera\ANXCamera_Misc\Tools\img extractor\system_" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\vendor" /O /X /E /H /K
-rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\img extractor\system_"
-rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\system"
-rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli\vendor"
+move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system_" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor"
+ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system_" vendor
+rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system_"
+rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp"
 
 :: Add frameworks
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\framework\framework-res.apk"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
+java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\framework\framework-res.apk"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\app\miui\miui.apk"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
+java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\app\miui\miui.apk"  -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
 
 :: Decompile MiuiCamera, cleanup and move
 java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" d -b -f -o "D:\ANXCamera\ANXCamera_Misc\APKTool\1-Decompiled APKs\ANXCamera" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\priv-app\MiuiCamera\MiuiCamera.apk" -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
+java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\APKTool\Apktool\apktool_2.4.0.jar" d -b -f -o "D:\ANXCamera\ANXCamera_Misc\APKTool\1-Decompiled APKs\ANXCamera" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\priv-app\MiuiCamera\MiuiCamera.apk" -p "D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks"
 rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\APKTool\1-Decompiled APKs\ANXCamera\original"
 xcopy "D:\ANXCamera\ANXCamera_Misc\APKTool\1-Decompiled APKs\ANXCamera" "D:\ANXCamera\ANXCamera_APK"  /O /X /E /H /K
 rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\APKTool\1-Decompiled APKs\ANXCamera"
 
 :: Extract Classes
 :: Miui.apk
-cd "C:\Program Files\7-Zip\"
+C: & cd "C:\Program Files\7-Zip\"
 7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\app\miui\miui.apk" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miui\
+7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\app\miui\miui.apk" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miui\
 ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miui\classes.dex" boot-miui_classes.dex
 xcopy "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miui\boot-miui_classes.dex" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed"
 
 :: Miuisystem.apk
 7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\app\miuisystem\miuisystem.apk" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miuisystem\
+7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\app\miuisystem\miuisystem.apk" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miuisystem\
 ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miuisystem\classes.dex" boot-miuisystem_classes.dex
 xcopy "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\miuisystem\boot-miuisystem_classes.dex" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed"
 
 :: Framework.jar
 7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\framework\framework.jar" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\framework\
+7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\framework\framework.jar" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\framework\
 ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\framework\classes.dex" boot-framework_classes.dex
 ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\framework\classes2.dex" boot-framework_classes2.dex
 ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\framework\classes3.dex" boot-framework_classes3.dex
@@ -71,6 +82,7 @@ xcopy "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\framework\boo
 
 :: Gson.jar and cleanup
 7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\framework\gson.jar" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\gson\
+7z x "D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\system\framework\gson.jar" -oD:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\gson\
 ren "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\gson\classes.dex" gson_classes.dex
 xcopy "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp\gson\gson_classes.dex" "D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed"
 rmdir /S /Q D:\ANXCamera\ANXCamera_Misc\Rom_Files\Classes_Deodexed\temp
