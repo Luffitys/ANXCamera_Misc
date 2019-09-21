@@ -1,3 +1,5 @@
 APKTool/Frameworks/*.apk
-Rom_Files/system
-Rom_Files/vendor
+Rom_Files/ROM_System_Vendor/system
+Rom_Files/ROM_System_Vendor/vendor
+Rom_Files/Classes_Deodexed/boot*
+Rom_Files/Classes_Deodexed/gson
