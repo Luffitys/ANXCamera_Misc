@@ -3,19 +3,19 @@
   <SelectedPathMain>D:\ANXCamera\ANXCamera_Misc\Rom_Files\ROM_System_Vendor\system\priv-app\MiuiCamera\MiuiCamera.apk</SelectedPathMain>
   <SelectedDexOdexOat />
   <SelectedSmali />
-  <PathDec>D:\ANXCamera\ANXCamera_Misc\APKTool\1-Decompiled APKs</PathDec>
-  <PathCom>D:\ANXCamera\ANXCamera_Misc\APKTool\2-Recompiled APKs</PathCom>
-  <PathExt>D:\ANXCamera\ANXCamera_Misc\APKTool\3-Extracted APKs</PathExt>
-  <PathZip>D:\ANXCamera\ANXCamera_Misc\APKTool\4-Zipped APKs</PathZip>
-  <PathBaksmali>D:\ANXCamera\ANXCamera_Misc\APKTool\5-Baksmali</PathBaksmali>
-  <PathSmali>D:\ANXCamera\ANXCamera_Misc\APKTool\6-Smali</PathSmali>
-  <PathPem>D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\apkeasytool.pem</PathPem>
-  <PathPk8>D:\ANXCamera\ANXCamera_Misc\APKTool\Resources\apkeasytool.pk8</PathPk8>
+  <PathDec>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\1-Decompiled APKs</PathDec>
+  <PathCom>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\2-Recompiled APKs</PathCom>
+  <PathExt>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\3-Extracted APKs</PathExt>
+  <PathZip>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\4-Zipped APKs</PathZip>
+  <PathBaksmali>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\5-Baksmali</PathBaksmali>
+  <PathSmali>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\6-Smali</PathSmali>
+  <PathPem>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\apkeasytool.pem</PathPem>
+  <PathPk8>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\apkeasytool.pk8</PathPk8>
   <PathJksFile />
   <PathTempDec />
-  <PathTempFw>D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks</PathTempFw>
+  <PathTempFw>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks</PathTempFw>
   <PathTempFw2>D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks</PathTempFw2>
-  <PathFw>D:\ANXCamera\ANXCamera_Misc\APKTool\Frameworks</PathFw>
+  <PathFw>D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks</PathFw>
   <PathJava />
   <FileNameDec>ANXCamera</FileNameDec>
   <FileNameCom>ANXCamera</FileNameCom>
@@ -25,8 +25,8 @@
   <DropDownApkSign>Apksigner (Default)</DropDownApkSign>
   <DropDownLogLevel>Warn &amp; Error only (Default)</DropDownLogLevel>
   <DropDownCmdMode>WriteLine (Recommended)</DropDownCmdMode>
-  <DwordX>104</DwordX>
-  <DwordY>104</DwordY>
+  <DwordX>52</DwordX>
+  <DwordY>52</DwordY>
   <DwordXmx>1024</DwordXmx>
   <CheckBoxDecB>true</CheckBoxDecB>
   <CheckBoxDecF>true</CheckBoxDecF>
