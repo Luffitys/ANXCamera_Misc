@@ -1,6 +1,11 @@
+xiaomi.eu*.zip
 Tools/APKTool/Frameworks/*.apk
-Rom_Files/ROM_System_Vendor/system
-Rom_Files/ROM_System_Vendor/vendor
-Rom_Files/Classes_Deodexed/boot*
-Rom_Files/Classes_Deodexed/gson
 Tools/APKTool/Logs/*.txt
+ROMS/OTHER_EXTRACTED_ROM/system
+ROMS/OTHER_EXTRACTED_ROM/vendor
+ROMS/ANOTHER_EXTRACTED_ROM/system
+ROMS/ANOTHER_EXTRACTED_ROM/vendor
+ROMS/REQUIRED_EXTRACTED_ROM/ROM_System_Vendor/system
+ROMS/REQUIRED_EXTRACTED_ROM/ROM_System_Vendor/vendor
+ROMS/REQUIRED_EXTRACTED_ROM/Classes_Deodexed/boot*
+ROMS/REQUIRED_EXTRACTED_ROM/Classes_Deodexed/gson
