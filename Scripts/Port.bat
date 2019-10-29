@@ -1,98 +1,71 @@
-:: Changes directory to 7-Zip directory
-C: & cd "C:\Program Files\7-Zip"
+	:: Extract Zip
+cd ..
+7z x *.zip -oTemp\ system.new.dat.br system.transfer.list vendor.new.dat.br vendor.transfer.list
 
-:: Extract ROM
-7z x "D:\ANXCamera\ANXCamera_Misc\*.zip" -o"D:\ANXCamera\ANXCamera_Misc\Tools\temp\"
-D: & cd "D:\ANXCamera\ANXCamera_Misc\Tools\temp"
+	:: Convert .dat.br -> .dat
+Tools\Extractor\Brotli.exe --decompress --in Temp\system.new.dat.br --out Temp\system.new.dat
+Tools\Extractor\Brotli.exe --decompress --in Temp\vendor.new.dat.br --out Temp\vendor.new.dat
 
-:: Move files
-move system.new.dat.br "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor" & move system.transfer.list "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
-move vendor.new.dat.br "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor" & move vendor.transfer.list "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
+	:: Convert .dat -> .img
+Tools\Extractor\sdat2Img.exe Temp\system.transfer.list Temp\system.new.dat Temp\system.img
+Tools\Extractor\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\vendor.img
 
-:: Convert files and cleanup
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
-rmdir /S /Q "D:\ANXCamera\ANXCamera_Misc\Tools\temp"
-brotli --decompress --in system.new.dat.br --out system.new.dat
-del system.new.dat.br
-mkdir temp & cd temp & mkdir system
-move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.new.dat" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system"
-move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system"
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
-ren vendor.new.dat.br system.new.dat.br & ren vendor.transfer.list system.transfer.list
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
-brotli --decompress --in system.new.dat.br --out system.new.dat
-del system.new.dat.br
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp" & mkdir vendor
-move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.new.dat" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor"
-move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor"
+	:: Extract .img
+7z x Temp\system.img -oROMS\REQUIRED_ROM\ROM\system
+7z x Temp\vendor.img -oROMS\REQUIRED_ROM\ROM\vendor
 
-:: Extract system files and cleanup
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor"
-sdat2img "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\system\system.new.dat" system.img
-imgextractor system.img
-del system.img system__statfile.txt
-move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system_" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor"
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system_" system
 
-:: Extract vendor files and cleanup
-sdat2img "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor\system.transfer.list" "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp\vendor\system.new.dat" system.img
-imgextractor system.img
-del system.img system__statfile.txt
-move "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\system_" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor"
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system_" vendor
-rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\brotli_img_extractor\temp"
 
-:: Add frameworks
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\framework\framework-res.apk"  -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\framework\framework-res.apk"  -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\app\miui\miui.apk"  -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" if "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\app\miui\miui.apk"  -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
 
-:: Decompile MiuiCamera, cleanup and move
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" d -b -f -o "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\1-Decompiled APKs\ANXCamera" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\priv-app\MiuiCamera\MiuiCamera.apk" -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" d -b -f -o "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\1-Decompiled APKs\ANXCamera" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\priv-app\MiuiCamera\MiuiCamera.apk" -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
-rmdir /Q /S "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\1-Decompiled APKs\ANXCamera\original"
-move "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\1-Decompiled APKs\ANXCamera" "D:\ANXCamera\ANXCamera_APK"
+	:: Add Frameworks [Trial and Error]
+java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\framework\framework-res.apk -p Tools\APKTool\Frameworks
+java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\system\framework\framework-res.apk -p Tools\APKTool\Frameworks
 
-:: Extract Classes
-:: Miui.apk
-C: & cd "C:\Program Files\7-Zip\"
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\app\miui\miui.apk" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miui\
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\app\miui\miui.apk" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miui\
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miui\classes.dex" boot-miui_classes.dex
-move "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miui\boot-miui_classes.dex" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed"
+java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\app\miui\miui.apk -p Tools\APKTool\Frameworks
+java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\system\app\miui\miui.apk -p Tools\APKTool\Frameworks
 
-:: Miuisystem.apk
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\app\miuisystem\miuisystem.apk" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miuisystem\
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\app\miuisystem\miuisystem.apk" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miuisystem\
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miuisystem\classes.dex" boot-miuisystem_classes.dex
-move "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\miuisystem\boot-miuisystem_classes.dex" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed"
+	:: Decompile MiuiCamera
+java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
+java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
 
-:: Framework.jar
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\framework\framework.jar" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\framework\framework.jar" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\classes.dex" boot-framework_classes.dex
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\classes2.dex" boot-framework_classes2.dex
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\classes3.dex" boot-framework_classes3.dex
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\classes4.dex" boot-framework_classes4.dex
-move "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\framework\boot-framework_classes*.dex" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed"
 
-:: Gson.jar and cleanup
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\framework\gson.jar" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\gson\
-7z x "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\ROM_System_Vendor\system\system\framework\gson.jar" -oD:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\gson\
-ren "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\gson\classes.dex" gson_classes.dex
-move "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp\gson\gson_classes.dex" "D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed"
-rmdir /S /Q D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\temp
 
-:: Extract classes and cleanup
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\bootframework D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-framework_classes.dex
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\bootframework2 D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-framework_classes2.dex
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\bootframework3 D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-framework_classes3.dex
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\bootframework4 D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-framework_classes4.dex
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\gson D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\gson_classes.dex
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-miui D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-miui_classes.dex
-Java -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\baksmali.jar" d -o D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-miuisystem D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot-miuisystem_classes.dex
-del D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\boot*.dex D:\ANXCamera\ANXCamera_Misc\ROMS\REQUIRED_EXTRACTED_ROM\Classes_Deodexed\gson*.dex
+
+	:: Extract Classes [Trial and Error]
+	
+	:: miui.apk
+7z x ROMS\REQUIRED_ROM\ROM\system\system\app\miui\miui.apk -oTemp\miui *.dex
+7z x ROMS\REQUIRED_ROM\ROM\system\app\miui\miui.apk -oTemp\miui *.dex
+
+	:: miuisystem.apk
+7z x ROMS\REQUIRED_ROM\ROM\system\system\app\miuisystem\miuisystem.apk -oTemp\miuisystem *.dex
+7z x ROMS\REQUIRED_ROM\ROM\system\app\miuisystem\miuisystem.apk -oTemp\miuisystem *.dex
+
+	:: framework.jar
+7z x ROMS\REQUIRED_ROM\ROM\system\system\framework\framework.jar -oTemp\framework *.dex
+7z x ROMS\REQUIRED_ROM\ROM\system\framework\framework.jar -oTemp\framework *.dex
+
+	:: gson.jar
+7z x ROMS\REQUIRED_ROM\ROM\system\system\framework\gson.jar -oTemp\gson *.dex
+7z x ROMS\REQUIRED_ROM\ROM\system\framework\gson.jar -oTemp\gson *.dex
+
+
+
+
+	:: Decompile Classes
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\miui Temp\miui\classes.dex
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\miuisystem Temp\miuisystem\classes.dex
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\framework Temp\framework\classes.dex
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\framework Temp\framework\classes2.dex
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\framework Temp\framework\classes3.dex
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\framework Temp\framework\classes4.dex
+java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\gson Temp\gson\classes.dex
+
+	:: Cleanup
+rmdir /Q /S Temp
+
+
+
 
 :: Avoid cmd closing
 pause

@@ -1,28 +1,27 @@
-:: Compile
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Apktool\apktool_2.4.0.jar" b -o "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk" "D:\ANXCamera\ANXCamera_APK"  -p "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Frameworks"
+	:: Compile
+cd ..
+java -Xmx1024m -jar Tools\APKTool\apktool.jar b -o ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_APK  -p Tools\APKTool\Frameworks
 
-:: Zipalign
-"D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\zipalign.exe" -f 4 "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk" "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera zipaligned.apk"
+	:: Zipalign
+Tools\APKTool\zipalign.exe -f 4 ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk
 
-:: Cleanup
-del "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk"
-del "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.jobf
+	:: Cleanup
+del ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.*
 
-:: Sign
-java -Xmx1024m -jar "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\ApkSigner.jar" sign  --key "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\apkeasytool.pk8" --cert "D:\ANXCamera\ANXCamera_Misc\Tools\APKTool\Resources\apkeasytool.pem" --out "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk" "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera zipaligned.apk"
+	:: Sign
+java -Xmx1024m -jar Tools\APKTool\ApkSigner.jar Tools\APKTool\Misc\PublicKey.pem Tools\APKTool\Misc\PrivateKey.pk8 ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk
 
-:: Cleanup apk
-del "D:\ANXCamera\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera zipaligned.apk"
+	:: Cleanup apk
+del "..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk"
 
-:: Cleanup zip
-del "D:\ANXCamera\ANXCamera_Magisk\*.zip"
+	:: Cleanup zip
+del ..\ANXCamera_Magisk\*.zip
 
-:: Compress --> zip
-"C:\Program Files\7-Zip\7z.exe" a "D:\ANXCamera\ANXCamera_Magisk\ANXCamera_Unity_150.WhatHasHappened_sysover.zip" -xr!.git* -xr!LICENSE -r "D:\ANXCamera\ANXCamera_Magisk\*" -mx9
+	:: Compress --> zip
+7z a ..\ANXCamera_Magisk\ANXCamera_Unity_150.WhatHasHappened_sysover.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
 
-:: Push zip to phone
-cd "D:\ANXCamera\ANXCamera_Misc\Tools\adb"
-adb push "D:\ANXCamera\ANXCamera_Magisk\ANXCamera_Unity_150.WhatHasHappened_sysover.zip" /sdcard/
+	:: Push zip to phone
+adb push ..\ANXCamera_Magisk\ANXCamera_Unity_150.WhatHasHappened_sysover.zip /sdcard/
 
-:: Avoid cmd closing after finish to see eventual issues
+	:: Avoid cmd closing after finish to see eventual issues
 pause

@@ -1,2 +1,7 @@
-[/system/framework/] framework-res.apk
-[/system/app/miui] miui.apk
+REQUIRED:
+
+	[/system/framework/] framework-res.apk
+
+OPTIONAL:
+
+	[/system/app/miui] miui.apk

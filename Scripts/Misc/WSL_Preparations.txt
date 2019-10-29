@@ -1,0 +1,49 @@
+	:: Update everything
+sudo apt update -y && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt clean -y && sudo apt autoclean -y
+
+	:: Install Requirements
+sudo apt install libz-dev unzip build-essential openjdk-8-jdk-headless
+
+	:: Prepare vdexExtractor
+git clone https://github.com/anestisb/vdexExtractor.git
+cd vdexExtractor/
+./make.sh
+cd ..
+
+	:: Prepare Smali Baksmali
+git clone https://github.com/JesusFreke/smali.git Smali_Baksmali
+cd Smali_Baksmali
+./gradlew
+./gradlew build
+cd ..
+
+	:: Prepare ApkTool
+git clone https://github.com/iBotPeaches/Apktool.git
+cd Apktool
+./gradlew
+./gradlew build
+cd ..
+
+	:: Prepare Jadx
+git clone https://github.com/skylot/jadx.git
+cd jadx
+./gradlew
+./gradlew dist
+cd ..
+
+	:: Clean Project Folder
+rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/*smali.jar
+rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/apktool.jar
+rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/Jadx.exe
+
+	:: Copy Smali, Baksmali, ApkTool, Jadx
+cp Smali_Baksmali/baksmali/build/libs/baksmali-*-fat.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/
+cp Smali_Baksmali/smali/build/libs/smali-*-fat.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/
+cp Apktool/brut.apktool/apktool-cli/build/libs/apktool-*-small.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/
+cp jadx/build/jadx-gui-dev.exe /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/
+
+	:: Rename
+mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/baksmali*.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/baksmali.jar
+mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/smali*.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/smali.jar
+mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/apktool-*-small.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/apktool.jar
+mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/jadx-gui-dev.exe /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/Jadx.exe
