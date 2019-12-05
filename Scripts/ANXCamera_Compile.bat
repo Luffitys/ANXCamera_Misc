@@ -18,10 +18,10 @@ del "..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk"
 del ..\ANXCamera_Magisk\*.zip
 
 	:: Compress --> zip
-7z a ..\ANXCamera_Magisk\ANXCamera_Unity_157.MinorChangesAreWelcome_sysover.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
+7z a ..\ANXCamera_Magisk\ANXCamera_Unity_159.GetATissue.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
 
 	:: Push zip to phone
-adb push ..\ANXCamera_Magisk\ANXCamera_Unity_157.MinorChangesAreWelcome_sysover.zip /sdcard/
+adb push ..\ANXCamera_Magisk\ANXCamera_Unity_159.GetATissue.zip /sdcard/
 
 	:: Avoid cmd closing after finish to see eventual issues
 pause

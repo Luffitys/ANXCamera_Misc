@@ -14,14 +14,8 @@ Tools\Extractor\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\
 7z x Temp\system.img -oROMS\THIRD_ROM\system
 7z x Temp\vendor.img -oROMS\THIRD_ROM\vendor
 
-
-
-
 	:: Cleanup
 rmdir /Q /S Temp
 
-
-
-
-:: Avoid cmd closing
+	:: Avoid cmd closing
 pause

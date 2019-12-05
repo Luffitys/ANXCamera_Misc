@@ -24,9 +24,9 @@ cd Apktool
 ./gradlew build
 cd ..
 
-	:: Prepare Jadx
-git clone https://github.com/skylot/jadx.git Jadx
-cd Jadx
+	:: Prepare jadx
+git clone https://github.com/skylot/jadx.git jadx
+cd jadx
 ./gradlew
 ./gradlew dist
 cd ..
@@ -34,22 +34,22 @@ cd ..
 	:: Clean Tools
 rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/*smali.jar
 rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/apktool.jar
-rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/Jadx.exe
+rm -rf /mnt/d/ANXCamera/ANXCamera_Misc/Tools/jadx/jadx.exe
 
 	:: Copy (Bak-)Smali, Apktool, jadx
 cp Smali/baksmali/build/libs/baksmali-*-fat.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/
 cp Smali/smali/build/libs/smali-*-fat.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/
 cp Apktool/brut.apktool/apktool-cli/build/libs/apktool-*-small.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/
-cp Jadx/build/jadx-gui-dev.exe /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/
+cp jadx/build/jadx-gui-dev.exe /mnt/d/ANXCamera/ANXCamera_Misc/Tools/jadx/
 
 	:: Rename Tools
 mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/baksmali*.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/baksmali.jar
 mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/smali*.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/Misc/smali.jar
 mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/apktool-*-small.jar /mnt/d/ANXCamera/ANXCamera_Misc/Tools/APKTool/apktool.jar
-mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/jadx-gui-dev.exe /mnt/d/ANXCamera/ANXCamera_Misc/Tools/Jadx/Jadx.exe
+mv /mnt/d/ANXCamera/ANXCamera_Misc/Tools/jadx/jadx-gui-dev.exe /mnt/d/ANXCamera/ANXCamera_Misc/Tools/jadx/jadx.exe
 
 	:: Clean Directories
 rm -rf vdexExtractor
 rm -rf Smali_Baksmali
 rm -rf Apktool
-rm -rf Jadx
+rm -rf jadx
