@@ -1,4 +1,4 @@
-	:: Extract Zip
+	:: Extract .zip
 cd ..\..
 7z x *.zip -oTemp\ system.new.dat.br system.transfer.list vendor.new.dat.br vendor.transfer.list
 
@@ -17,5 +17,5 @@ Tools\Extractor\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\
 	:: Cleanup
 rmdir /Q /S Temp
 
-	:: Avoid cmd closing
+	:: Avoid closing of CMD to see potential issues
 pause

@@ -1,4 +1,4 @@
-	:: Extract Zip
+	:: Extract .zip
 cd ..
 7z x *.zip -oTemp\ system.new.dat.br system.transfer.list vendor.new.dat.br vendor.transfer.list
 
@@ -14,9 +14,6 @@ Tools\Extractor\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\
 7z x Temp\system.img -oROMS\REQUIRED_ROM\ROM\system
 7z x Temp\vendor.img -oROMS\REQUIRED_ROM\ROM\vendor
 
-
-
-
 	:: Add Frameworks [Trial and Error]
 java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\framework\framework-res.apk -p Tools\APKTool\Frameworks
 java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\system\framework\framework-res.apk -p Tools\APKTool\Frameworks
@@ -27,9 +24,6 @@ java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\system\app\m
 	:: Decompile MiuiCamera
 java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
 java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
-
-
-
 
 	:: Extract Classes [Trial and Error]
 	
@@ -49,9 +43,6 @@ java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_RO
 7z x ROMS\REQUIRED_ROM\ROM\system\system\framework\gson.jar -oTemp\gson *.dex
 7z x ROMS\REQUIRED_ROM\ROM\system\framework\gson.jar -oTemp\gson *.dex
 
-
-
-
 	:: Decompile Classes
 java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\miui Temp\miui\classes.dex
 java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\miuisystem Temp\miuisystem\classes.dex
@@ -64,8 +55,5 @@ java -jar Tools\APKTool\baksmali.jar d -o ROMS\REQUIRED_ROM\Required_Classes\gso
 	:: Cleanup
 rmdir /Q /S Temp
 
-
-
-
-:: Avoid cmd closing
+	:: Avoid closing of CMD to see potential issues
 pause
