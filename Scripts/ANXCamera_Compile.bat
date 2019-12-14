@@ -1,6 +1,6 @@
 	:: Compile
 cd ..
-java -Xmx1024m -jar Tools\APKTool\apktool.jar b -o ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_APK  -p Tools\APKTool\Frameworks
+java -Xmx1024m -jar Tools\APKTool\apktool.jar b --copy-original -o ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_APK  -p Tools\APKTool\Frameworks
 
 	:: Zipalign
 Tools\APKTool\zipalign.exe -f 4 ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk
