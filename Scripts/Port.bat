@@ -22,8 +22,8 @@ java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\app\miui\miu
 java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\system\app\miui\miui.apk -p Tools\APKTool\Frameworks
 
 	:: Decompile MiuiCamera
-java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
-java -jar Tools\APKTool\apktool.jar d -b -f -o ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
+java -jar Tools\APKTool\apktool.jar d --no-debug-info --output ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
+java -jar Tools\APKTool\apktool.jar d --no-debug-info --output ..\ANXCamera_APK ROMS\REQUIRED_ROM\ROM\system\system\priv-app\MiuiCamera\MiuiCamera.apk -p Tools\APKTool\Frameworks
 
 	:: Extract Classes [Trial and Error]
 	

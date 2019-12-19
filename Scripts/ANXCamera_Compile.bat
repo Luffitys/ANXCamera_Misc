@@ -1,6 +1,6 @@
 	:: Compile
 cd ..
-java -Xmx1024m -jar Tools\APKTool\apktool.jar b --copy-original -o ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_APK  -p Tools\APKTool\Frameworks
+java -Xmx1024m -jar Tools\APKTool\apktool.jar b --no-crunch --output ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_APK  -p Tools\APKTool\Frameworks
 
 	:: Zipalign
 Tools\APKTool\zipalign.exe -f 4 ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk
@@ -18,10 +18,10 @@ del "..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk"
 del ..\ANXCamera_Magisk\*.zip
 
 	:: Compress --> zip
-7z a ..\ANXCamera_Magisk\ANXCamera_Unity_159.GetATissue.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
+7z a ..\ANXCamera_Magisk\ANXCamera_Unity_162.AtronomicalFailure.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
 
 	:: Push zip to phone
-adb push ..\ANXCamera_Magisk\ANXCamera_Unity_159.GetATissue.zip /sdcard/
+adb push ..\ANXCamera_Magisk\ANXCamera_Unity_162.AtronomicalFailure.zip /sdcard/
 
 	:: Avoid cmd closing after finish to see eventual issues
 pause
