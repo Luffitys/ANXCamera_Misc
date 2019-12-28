@@ -11,8 +11,8 @@ Tools\Extractor\sdat2Img.exe Temp\system.transfer.list Temp\system.new.dat Temp\
 Tools\Extractor\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\vendor.img
 
 	:: Extract .img
-7z x Temp\system.img -oROMS\SECOND_ROM\system
-7z x Temp\vendor.img -oROMS\SECOND_ROM\vendor
+7z x -aos Temp\system.img -oROMS\SECOND_ROM\system
+7z x -aos Temp\vendor.img -oROMS\SECOND_ROM\vendor
 
 	:: Cleanup
 rmdir /Q /S Temp

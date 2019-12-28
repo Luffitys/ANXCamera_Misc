@@ -11,8 +11,8 @@ Tools\Extractor\sdat2Img.exe Temp\system.transfer.list Temp\system.new.dat Temp\
 Tools\Extractor\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\vendor.img
 
 	:: Extract .img
-7z x Temp\system.img -oROMS\REQUIRED_ROM\ROM\system
-7z x Temp\vendor.img -oROMS\REQUIRED_ROM\ROM\vendor
+7z x -aos Temp\system.img -oROMS\REQUIRED_ROM\ROM\system
+7z x -aos Temp\vendor.img -oROMS\REQUIRED_ROM\ROM\vendor
 
 	:: Add Frameworks [Trial and Error]
 java -jar Tools\APKTool\apktool.jar if ROMS\REQUIRED_ROM\ROM\system\framework\framework-res.apk -p Tools\APKTool\Frameworks
