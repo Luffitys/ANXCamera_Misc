@@ -1,27 +1,35 @@
+@ECHO OFF
+
+
+set ZIP=ANXCamera_Unity_162.AtronomicalFailure
+set APKTOOL=Tools\APKTool
+set APK=..\ANXCamera_Magisk\system\priv-app\ANXCamera
+
+
 	:: Compile
 cd ..
-java -Xmx1024m -jar Tools\APKTool\apktool.jar b --no-crunch --output ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_APK  -p Tools\APKTool\Frameworks
+java -jar %APKTOOL%\apktool.jar b --no-crunch --output %APK%\ANXCamera.apk ..\ANXCamera_APK  -p %APKTOOL%\Frameworks
 
 	:: Zipalign
-Tools\APKTool\zipalign.exe -f 4 ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk
+%APKTOOL%\zipalign.exe -f 4 %APK%\ANXCamera.apk %APK%\ANXCamera_zipaligned.apk
 
 	:: Cleanup
-del ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.*
+del %APK%\ANXCamera.*
 
 	:: Sign
-java -Xmx1024m -jar Tools\APKTool\ApkSigner.jar Tools\APKTool\Misc\PublicKey.pem Tools\APKTool\Misc\PrivateKey.pk8 ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk ..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera.apk
+java -jar %APKTOOL%\ApkSigner.jar %APKTOOL%\Misc\PublicKey.pem %APKTOOL%\Misc\PrivateKey.pk8 %APK%\ANXCamera_zipaligned.apk %APK%\ANXCamera.apk
 
 	:: Cleanup apk
-del "..\ANXCamera_Magisk\system\priv-app\ANXCamera\ANXCamera_zipaligned.apk"
+del %APK%\ANXCamera_zipaligned.apk
 
 	:: Cleanup zip
 del ..\ANXCamera_Magisk\*.zip
 
 	:: Compress --> zip
-7z a ..\ANXCamera_Magisk\ANXCamera_Unity_162.AtronomicalFailure.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
+7z a ..\ANXCamera_Magisk\%ZIP%.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
 
 	:: Push zip to phone
-adb push ..\ANXCamera_Magisk\ANXCamera_Unity_162.AtronomicalFailure.zip /sdcard/
+adb push ..\ANXCamera_Magisk\%ZIP%.zip /sdcard/
 
 	:: Avoid cmd closing after finish to see eventual issues
 pause
