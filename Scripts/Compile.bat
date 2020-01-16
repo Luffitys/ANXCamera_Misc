@@ -1,9 +1,9 @@
-@ECHO OFF
+@echo off
 
-
-set ZIP=ANXCamera_Unity_162.AtronomicalFailure
-set APKTOOL=Tools\APKTool
 set APK=..\ANXCamera_Magisk\system\priv-app\ANXCamera
+set ZIP=ANXCamera_Unity_162.AtronomicalFailure
+set UNITY=..\ANXCamera_Magisk
+set APKTOOL=Tools\APKTool
 
 
 	:: Compile
@@ -23,13 +23,13 @@ java -jar %APKTOOL%\ApkSigner.jar %APKTOOL%\Misc\PublicKey.pem %APKTOOL%\Misc\Pr
 del %APK%\ANXCamera_zipaligned.apk
 
 	:: Cleanup zip
-del ..\ANXCamera_Magisk\*.zip
+del %UNITY%\*.zip
 
 	:: Compress --> zip
-7z a ..\ANXCamera_Magisk\%ZIP%.zip -xr!.git* -xr!LICENSE -r ..\ANXCamera_Magisk\* -mx9
+7z a %UNITY%\%ZIP%.zip -xr!.git* -xr!LICENSE -r %UNITY%\* -mx9
 
 	:: Push zip to phone
-adb push ..\ANXCamera_Magisk\%ZIP%.zip /sdcard/
+adb push %UNITY%\%ZIP%.zip /sdcard/
 
 	:: Avoid cmd closing after finish to see eventual issues
 pause

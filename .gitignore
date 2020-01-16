@@ -1,13 +1,2 @@
 /*.zip
-
-ROMS/REQUIRED_ROM/ROM/system
-ROMS/REQUIRED_ROM/ROM/vendor
-ROMS/REQUIRED_ROM/Required_Classes/framework
-ROMS/REQUIRED_ROM/Required_Classes/gson
-ROMS/REQUIRED_ROM/Required_Classes/miui*
-
-ROMS/SECOND_ROM/system
-ROMS/SECOND_ROM/vendor
-
-ROMS/THIRD_ROM/system
-ROMS/THIRD_ROM/vendor
+ROMS

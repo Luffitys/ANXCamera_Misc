@@ -1,32 +1,33 @@
-@ECHO OFF
+@echo off
 
-set EXTRACTOR=Tools\Extractor
+set CLASSES=ROMS\REQUIRED_ROM\Required_Classes
 set SYSTEM=ROMS\REQUIRED_ROM\ROM\system
 set VENDOR=ROMS\REQUIRED_ROM\ROM\vendor
+set EXTRACTOR=Tools\Extractor
 set APKTOOL=Tools\APKTool
-set CLASSES=ROMS\REQUIRED_ROM\Required_Classes
+set TEMP=TEMP
 
-@ECHO ON
+@echo on
 
 
 	:: Extract .zip
 cd ..
-7z x *.zip -oTemp\ system.new.dat.br system.transfer.list vendor.new.dat.br vendor.transfer.list
+7z x *.zip -o%TEMP%\ system.new.dat.br system.transfer.list vendor.new.dat.br vendor.transfer.list
 
 	:: Convert .dat.br -> .dat
-%Extractor%\Brotli.exe --decompress --in Temp\system.new.dat.br --out Temp\system.new.dat
-%Extractor%\Brotli.exe --decompress --in Temp\vendor.new.dat.br --out Temp\vendor.new.dat
+%Extractor%\Brotli.exe --decompress --in %TEMP%\system.new.dat.br --out %TEMP%\system.new.dat
+%Extractor%\Brotli.exe --decompress --in %TEMP%\vendor.new.dat.br --out %TEMP%\vendor.new.dat
 
 	:: Convert .dat -> .img
-%Extractor%\sdat2Img.exe Temp\system.transfer.list Temp\system.new.dat Temp\system.img
-%Extractor%\sdat2Img.exe Temp\vendor.transfer.list Temp\vendor.new.dat Temp\vendor.img
+%Extractor%\sdat2Img.exe %TEMP%\system.transfer.list %TEMP%\system.new.dat %TEMP%\system.img
+%Extractor%\sdat2Img.exe %TEMP%\vendor.transfer.list %TEMP%\vendor.new.dat %TEMP%\vendor.img
 
 	:: Extract .img
-7z x -aos Temp\system.img -o%SYSTEM%
-7z x -aos Temp\vendor.img -o%VENDOR%
+7z x -aos %TEMP%\system.img -o%SYSTEM%
+7z x -aos %TEMP%\vendor.img -o%VENDOR%
 
 	:: Add Frameworks
-java -jar %APKTOOL%\apktool.jar if %SYSTEM%\system\framework\framework-res.apk -p Tools\APKTool\Frameworks
+java -jar %APKTOOL%\apktool.jar if %SYSTEM%\system\framework\framework-res.apk -p %APKTOOL%\Frameworks
 
 java -jar %APKTOOL%\apktool.jar if %SYSTEM%\system\app\miui\miui.apk -p %APKTOOL%\Frameworks
 
@@ -36,28 +37,28 @@ java -jar %APKTOOL%\apktool.jar d --no-debug-info --output ..\ANXCamera_APK %SYS
 	:: Extract Classes [Trial and Error]
 	
 	:: miui.apk
-7z x %SYSTEM%\system\app\miui\miui.apk -oTemp\miui *.dex
+7z x %SYSTEM%\system\app\miui\miui.apk -o%TEMP%\miui *.dex
 
 	:: miuisystem.apk
-7z x %SYSTEM%\system\app\miuisystem\miuisystem.apk -oTemp\miuisystem *.dex
+7z x %SYSTEM%\system\app\miuisystem\miuisystem.apk -o%TEMP%\miuisystem *.dex
 
 	:: framework.jar
-7z x %SYSTEM%\system\framework\framework.jar -oTemp\framework *.dex
+7z x %SYSTEM%\system\framework\framework.jar -o%TEMP%\framework *.dex
 
 	:: gson.jar
-7z x %SYSTEM%\system\framework\gson.jar -oTemp\gson *.dex
+7z x %SYSTEM%\system\framework\gson.jar -o%TEMP%\gson *.dex
 
 	:: Decompile Classes
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\miui Temp\miui\classes.dex
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\miuisystem Temp\miuisystem\classes.dex
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework Temp\framework\classes.dex
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework Temp\framework\classes2.dex
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework Temp\framework\classes3.dex
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework Temp\framework\classes4.dex
-java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\gson Temp\gson\classes.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\miui %TEMP%\miui\classes.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\miuisystem %TEMP%\miuisystem\classes.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework %TEMP%\framework\classes.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework %TEMP%\framework\classes2.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework %TEMP%\framework\classes3.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\framework %TEMP%\framework\classes4.dex
+java -jar %APKTOOL%\baksmali.jar d -o %CLASSES%\gson %TEMP%\gson\classes.dex
 
 	:: Cleanup
-rmdir /Q /S Temp
+rmdir /Q /S %TEMP%
 
 	:: Avoid closing of CMD to see potential issues
 pause
