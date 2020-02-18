@@ -1,7 +1,7 @@
 @echo off
 
 set APK=..\ANXCamera_Magisk\system\priv-app\ANXCamera
-set ZIP=ANXCamera_Unity_162.AtronomicalFailure
+set ZIP=ANXCamera_Unity_168.ShouldntHaveLeftMeYouSnake
 set UNITY=..\ANXCamera_Magisk
 set APKTOOL=Tools\APKTool
 
