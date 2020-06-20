@@ -2,15 +2,15 @@
 
 
 	:: Required
-set APKNAME=
+set APKNAME=ANXCamera
 	:: Enter "app" or "priv-app" Directory (Only if using Magisk Module)
-set APP_OR_PRIV-APP=
+set APP_OR_PRIV-APP=priv-app
 	:: Enter "y" or leave blank
-set USES_MAGISK_MODULE=
+set USES_MAGISK_MODULE=y
 
 
 set APKTOOL=Tools\APKTool
-set ZIPNAME=%APKNAME%_Mod
+set ZIPNAME=ANXCamera_Magisk_185.MeaningNotFound
 set ZIP=Tools\7z\7z.exe
 set ADB=Tools\adb\adb.exe
 
