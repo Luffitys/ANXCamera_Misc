@@ -2,4 +2,10 @@ REQUIRED:
 
 	[/system/framework/] framework-res.apk
 
-	[/system/app/miui] miui.apk
+	[/system/framework/framework-ext-res/] framework-ext-res.apk
+
+	[/system/app/miui/] miui.apk
+
+	[/system/app/miuisystem/] miuisystem.apk
+
+	[/system/priv-app/MiuiSystemUI/] MiuiSystemUI.apk

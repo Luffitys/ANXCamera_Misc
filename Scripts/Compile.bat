@@ -1,37 +1,55 @@
 @echo off
 
-set MAGISK_DIR=..\ANXCamera_Magisk
-set APK_DIR=%MAGISK_DIR%\system\priv-app\ANXCamera
-set APKTOOL_DIR=Tools\APKTool
-set ZIPNAME=ANXCamera_Magisk_183.WhatHappenedHere
+
+	:: Required
+set APKNAME=
+	:: Enter "app" or "priv-app" Directory (Only if using Magisk Module)
+set APP_OR_PRIV-APP=
+	:: Enter "y" or leave blank
+set USES_MAGISK_MODULE=
+
+
+set APKTOOL=Tools\APKTool
+set ZIPNAME=%APKNAME%_Mod
 set ZIP=Tools\7z\7z.exe
 set ADB=Tools\adb\adb.exe
 
 
-	:: Compile
+@echo on
+
+
 cd ..
-java -jar %APKTOOL_DIR%\apktool.jar b --no-crunch --output %APK_DIR%\ANXCamera.apk ..\ANXCamera_APK  -p %APKTOOL_DIR%\Frameworks
+
+if /I "%USES_MAGISK_MODULE%"=="y" (set APKOUTPUT=..\%APKNAME%_Magisk\system\%APP_OR_PRIV-APP%\%APKNAME%) else (set APKOUTPUT=..\%APKNAME%_APK)
+
+
+	:: Compile
+java -jar %APKTOOL%\apktool.jar b --no-crunch --output %APKOUTPUT%\%APKNAME%.apk ..\%APKNAME%_APK  -p %APKTOOL%\Frameworks
 
 	:: Zipalign
-%APKTOOL_DIR%\zipalign.exe -f 4 %APK_DIR%\ANXCamera.apk %APK_DIR%\ANXCamera_zipaligned.apk
+%APKTOOL%\zipalign.exe -f 4 %APKOUTPUT%\%APKNAME%.apk %APKOUTPUT%\%APKNAME%_zipaligned.apk
 
 	:: Cleanup
-del %APK_DIR%\ANXCamera.*
+del %APKOUTPUT%\%APKNAME%.*
 
 	:: Sign
-java -jar %APKTOOL_DIR%\ApkSigner.jar %APKTOOL_DIR%\Misc\PublicKey.pem %APKTOOL_DIR%\Misc\PrivateKey.pk8 %APK_DIR%\ANXCamera_zipaligned.apk %APK_DIR%\ANXCamera.apk
+java -jar %APKTOOL%\ApkSigner.jar %APKTOOL%\Misc\PublicKey.pem %APKTOOL%\Misc\PrivateKey.pk8 %APKOUTPUT%\%APKNAME%_zipaligned.apk %APKOUTPUT%\%APKNAME%.apk
 
 	:: Cleanup apk
-del %APK_DIR%\ANXCamera_zipaligned.apk
+del %APKOUTPUT%\%APKNAME%_zipaligned.apk
+
+if /I "%USES_MAGISK_MODULE%"=="y" (
 
 	:: Cleanup zip
-del %MAGISK_DIR%\*.zip
+del ..\%APKNAME%_Magisk\*.zip
 
 	:: Compress --> zip
-%ZIP% a %MAGISK_DIR%\%ZIPNAME%.zip -xr!.git* -xr!LICENSE -r %MAGISK_DIR%\* -mx9
+%ZIP% a ..\%APKNAME%_Magisk\%ZIPNAME%.zip -xr!.git* -xr!LICENSE -r ..\%APKNAME%_Magisk\* -mx9
 
 	:: Push zip to phone
-%ADB% push %MAGISK_DIR%\%ZIPNAME%.zip /sdcard/
+%ADB% push ..\%APKNAME%_Magisk\%ZIPNAME%.zip /sdcard/
+
+)
 
 	:: Avoid cmd closing after finish to see eventual issues
 pause
