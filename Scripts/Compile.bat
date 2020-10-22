@@ -1,7 +1,7 @@
 @echo off
 
 	:: Required, without _APK suffix
-set APKNAME=MiuiCamera
+set APKNAME=ANXCamera
 	:: Enter "y" or leave blank
 set USES_MAGISK_MODULE=y
 	:: If using Magisk module, enter "app" or "priv-app" depending on the APK's directory, otherwise leave blank

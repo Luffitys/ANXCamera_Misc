@@ -1,3 +1,3 @@
 ## Porting Tools
 
-##### This Repository is a Generic Tool-Base for Porting __MIUI Apps__.
+##### This Repository is a Tool-Base for Porting __MiuiCamera__.
