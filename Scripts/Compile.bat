@@ -7,7 +7,7 @@ set USES_MAGISK_MODULE=y
 	:: If using Magisk module, enter "app" or "priv-app" depending on the APK's directory, otherwise leave blank
 set APP_OR_PRIV-APP=priv-app
 	:: Enter "y" or leave blank
-set COPY_ORIGINAL_MANIFEST=y
+set COPY_ORIGINAL_MANIFEST=
 	:: Enter a value ranging from 0-9, 0 being the lowest and 9 the highest compresion level
 set ZIP_COMPRESSION_LEVEL=0
 
