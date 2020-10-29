@@ -9,7 +9,7 @@ set APP_OR_PRIV-APP=priv-app
 	:: Enter "y" or leave blank
 set COPY_ORIGINAL_MANIFEST=
 	:: Enter a value ranging from 0-9, 0 being the lowest and 9 the highest compresion level
-set ZIP_COMPRESSION_LEVEL=0
+set ZIP_COMPRESSION_LEVEL=7
 
 set APKTOOL=Tools\APKTool
 set ZIPNAME=%APKNAME%_Mod
