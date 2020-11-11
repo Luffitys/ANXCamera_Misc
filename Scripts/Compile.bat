@@ -42,7 +42,7 @@ del ..\%APKNAME%_Magisk\*.zip
 del ..\%APKNAME%_Magisk\system\%APP_OR_PRIV-APP%\%APKNAME%\%APKNAME%.apk.idsig
 
 	:: Compress --> zip
-%ZIP% a ..\%APKNAME%_Magisk\%ZIPNAME%.zip -xr!.git* -xr!LICENSE -r ..\%APKNAME%_Magisk\* -mx%ZIP_COMPRESSION_LEVEL%
+%ZIP% a ..\%APKNAME%_Magisk\%ZIPNAME%.zip -xr!.git* -xr!LICENSE -xr!README.md -r ..\%APKNAME%_Magisk\* -mx%ZIP_COMPRESSION_LEVEL%
 
 	:: Push zip to phone
 %ADB% push ..\%APKNAME%_Magisk\%ZIPNAME%.zip /sdcard/
